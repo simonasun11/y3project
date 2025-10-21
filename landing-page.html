@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is STICKY in coding?</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: white;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #f0f0f0;
+        }
+
+
+        /* Sticker Peel Effect */
+        #Awesome {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            backface-visibility: hidden;
+        }
+
+        #Awesome .sticky {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 300px;
+            height: 300px;
+            transform: rotate(45deg);
+        }
+
+        #Awesome .reveal .circle {
+            background: #fafafa;
+            box-shadow: 0 1px 0px rgba(0,0,0,.15);
+            font-family: 'Impact', 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 900;
+            line-height: 1.1;
+            text-align: center; 
+            cursor: pointer;
+            font-size: 24px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            word-wrap: break-word;
+        }
+
+        #Awesome .circle_wrapper {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            left: 0px;
+            top: 0px;
+            overflow: hidden;
+        }
+
+        #Awesome .circle {
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            margin: 30px;
+            border-radius: 999px;
+        }
+
+        #Awesome .back {
+            height: 20px;
+            top: 50px;
+        }
+
+        #Awesome .back .circle {
+            margin-top: -220px;
+            background-color: #EB486E;
+            background-image: -webkit-linear-gradient(bottom, rgba(235,72,110,.0), rgba(255,255,255,.8));
+        }
+
+        #Awesome .front {
+            height: 250px;
+            bottom: 0;
+            top: auto;	
+            box-shadow: 0 -230px 30px -230px rgba(0,0,0,.3);
+        }
+
+        #Awesome .front .circle {
+            margin-top: -20px;
+            background: #EB486E;
+            background-image: -webkit-linear-gradient(bottom, rgba(235,72,110,.0) 75%, #d63d5f 95%);
+            background-image: -moz-linear-gradient(bottom, rgba(235,72,110,.0) 75%, #d63d5f 95%);
+            background-image: linear-gradient(bottom, rgba(235,72,110,.0) 75%, #d63d5f 95%);
+        }
+
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            #Awesome {
+                width: 250px;
+                height: 250px;
+            }
+            #Awesome .sticky {
+                width: 250px;
+                height: 250px;
+            }
+            #Awesome .circle_wrapper {
+                width: 250px;
+                height: 250px;
+            }
+            #Awesome .circle {
+                width: 200px;
+                height: 200px;
+                margin: 25px;
+            }
+            #Awesome .reveal .circle {
+                line-height: 1.1;
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #Awesome {
+                width: 200px;
+                height: 200px;
+            }
+            #Awesome .sticky {
+                width: 200px;
+                height: 200px;
+            }
+            #Awesome .circle_wrapper {
+                width: 200px;
+                height: 200px;
+            }
+            #Awesome .circle {
+                width: 160px;
+                height: 160px;
+                margin: 20px;
+            }
+            #Awesome .reveal .circle {
+                line-height: 1.1;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    
+
+    <div id="Awesome">
+        <div class="reveal circle_wrapper">
+            <div class="circle">What is STICKY in coding?</div>
+        </div>
+                        
+        <div class="sticky">
+            <div class="front circle_wrapper">
+                <div class="circle"></div>
+            </div>
+        </div>
+                        
+        <div class="sticky">
+            <div class="back circle_wrapper">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goToWebflowSite() {
+            window.location.href = 'https://simonas-radical-site-83e59c.webflow.io/#section';
+        }
+
+        // GSAP Animation
+        (function() {
+            const timeline = gsap.timeline({ 
+                paused: true,
+                defaults: {
+                ease: "power1.inOut",
+                duration: 0.75 
+                }
+            });
+
+            timeline
+                    .to('.sticky', {rotation:10},0)
+                    .to('.back', {height:150, top:180},0)
+                    .to('.back .circle', {marginTop:-80},0)
+                    .to('.front', {height:120, boxShadow: '0 -100px 15px -100px rgba(0,0,0,.1)' },0)
+                    .to('.front .circle', {marginTop:-150, backgroundColor:'#d63d5f', backgroundPosition: '0 150px'},0);
+
+            document.querySelector('#Awesome').addEventListener('mouseenter', function(event) {
+                timeline.play();             
+            });
+       
+            document.querySelector('#Awesome').addEventListener('mouseleave', function(event) {
+                timeline.reverse();
+            });
+
+            // Add click functionality to the sticker
+            document.querySelector('#Awesome').addEventListener('click', function(event) {
+                event.preventDefault();
+                console.log('Sticker clicked - navigating to Webflow site');
+                goToWebflowSite();
+            });
+        })();
+    </script>
+</body>
+</html>
