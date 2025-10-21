@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn CSS position: sticky — Guided Lesson</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: white;
+            margin: 0;
+            padding: 0;
+            overflow: auto;
+        }
+
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+            padding-bottom: 80px;
+        }
+
+        .content-row {
+            display: flex;
+            width: 100%;
+            min-height: 120vh;
+            gap: 24px;
+            padding: 0 20px;
+        }
+
+        .left-content {
+            width: 50%;
+            position: relative;
+        }
+
+        .right-content {
+            width: 50%;
+            position: relative;
+        }
+
+
+        .sticky-image {
+            position: sticky;
+            width: auto;
+            height: auto;
+            max-width: 300px;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .sticky-top {
+            top: 20px;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .sticky-top:first-of-type {
+            margin-left: 20px;
+            margin-right: auto;
+        }
+
+        .sticky-top:last-of-type {
+            margin-left: auto;
+            margin-right: 20px;
+        }
+
+        .sticky-bottom {
+            bottom: 20px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .sticky-left {
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            position: sticky;
+        }
+
+        .sticky-right {
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            position: sticky;
+        }
+
+        /* Lesson layout */
+        header.lesson-hero {
+            padding: 48px 20px 8px 20px;
+        }
+
+        header.lesson-hero h1 {
+            font-size: 40px;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        header.lesson-hero p {
+            color: #444;
+        }
+
+        nav.toc {
+            position: sticky;
+            top: 0;
+            background: white;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            padding: 12px 20px;
+            z-index: 2;
+        }
+
+        nav.toc a {
+            margin-right: 16px;
+            color: #0a66c2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        section.lesson-section {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .callout {
+            background: #f7fbff;
+            border: 1px solid #dbeafe;
+            padding: 12px 14px;
+            border-radius: 8px;
+        }
+
+        .code-sample {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 14px;
+            border-radius: 8px;
+            overflow: auto;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 14px;
+        }
+
+        .guide-label {
+            position: sticky;
+            top: 12px;
+            background: #111827;
+            color: #f9fafb;
+            padding: 8px 12px;
+            border-radius: 999px;
+            width: fit-content;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+            z-index: 3;
+            margin-left: 20px;
+        }
+
+        .guide-label.small {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        /* Interactive demo */
+        .demo-box {
+            border: 1px dashed #cbd5e1;
+            padding: 16px;
+            border-radius: 8px;
+            position: relative;
+            min-height: 60vh;
+            overflow: auto;
+            background: #fafafa;
+        }
+
+        .demo-track {
+            height: 150vh;
+            padding: 12px;
+            color: #374151;
+        }
+
+        .demo-sticky {
+            width: 180px;
+            max-height: 220px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+        }
+
+        .is-sticky {
+            position: sticky;
+            top: 12px;
+        }
+
+        /* Guide images replacing text badges */
+        .guide-image {
+            position: sticky;
+            top: 12px;
+            width: 120px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            z-index: 3;
+            margin-left: 20px;
+        }
+        .guide-image.small {
+            width: 90px;
+        }
+
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .sticky-image {
+                max-width: 250px;
+                max-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="lesson-hero">
+            <h1>Learn CSS <code>position: sticky</code></h1>
+            <p>Scroll through this guided lesson. Follow the sticky images — they point you to what comes next.</p>
+        </header>
+
+        <nav class="toc">
+            <a href="#what-is-sticky">What is sticky?</a>
+            <a href="#sticky-top">Sticky at the top</a>
+            <a href="#sticky-sides">Sticky in columns</a>
+            <a href="#sticky-bottom">Sticky near the bottom</a>
+            <a href="#interactive-demo">Interactive demo</a>
+        </nav>
+
+        <section id="what-is-sticky" class="lesson-section">
+            <h2>What is <code>position: sticky</code>?</h2>
+            <div class="callout">
+                <p><strong>Sticky</strong> is a hybrid between <em>relative</em> and <em>fixed</em> positioning. An element behaves as relative until a given scroll threshold is reached, then it sticks like fixed — but only within its scroll container.</p>
+            </div>
+            <div class="code-sample"><pre><code>.note {
+  position: sticky;
+  top: 12px; /* threshold where sticking starts */
+}
+
+/* You can also use left/right/bottom instead of top. */</code></pre></div>
+            <img src="scanned/img5.JPG" alt="Guide: scroll down" class="guide-image small">
+        </section>
+
+        <section id="sticky-top" class="lesson-section">
+            <h2>Sticky at the top</h2>
+            <p>These images stick to the top with a small offset while you scroll past them.</p>
+            <img src="scanned/img1.JPG" alt="Sticky Top Example 1" class="sticky-image sticky-top">
+            <img src="scanned/img5.JPG" alt="Sticky Top Example 2" class="sticky-image sticky-top">
+            <img src="scanned/img2.JPG" alt="Guide: next section" class="guide-image">
+        </section>
+
+        <section id="sticky-sides" class="lesson-section">
+            <h2>Sticky inside columns</h2>
+            <p>Within a tall row, items can stick to the left and right. They only stick inside their own scroll area.</p>
+            <div class="content-row">
+                <div class="left-content">
+                    <img src="scanned/img3.JPG" alt="Sticky Left" class="sticky-image sticky-left">
+                </div>
+                <div class="right-content">
+                    <img src="scanned/img4.JPG" alt="Sticky Right" class="sticky-image sticky-right">
+                </div>
+            </div>
+            <img src="scanned/img1.JPG" alt="Guide: next section" class="guide-image">
+        </section>
+
+        <section id="sticky-bottom" class="lesson-section">
+            <h2>Sticky near the bottom</h2>
+            <p>Sticky can also use <code>bottom</code>. The element will cling near the bottom edge as you approach it.</p>
+            <img src="scanned/img2.JPG" alt="Sticky Bottom" class="sticky-image sticky-bottom">
+            <img src="scanned/img3.JPG" alt="Guide: interactive demo" class="guide-image">
+        </section>
+
+        <section id="interactive-demo" class="lesson-section">
+            <h2>Interactive demo</h2>
+            <p>Toggle sticky on the image below and scroll inside the box.</p>
+            <label><input type="checkbox" id="toggleSticky" checked> Make the image sticky</label>
+            <div class="demo-box" id="demoBox">
+                <img id="demoImage" src="scanned/img1.JPG" alt="Demo Sticky" class="demo-sticky is-sticky">
+                <div class="demo-track">
+                    <p><strong>Scroll inside this box.</strong> With sticky enabled, the image will hover at the top while this content moves by.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer viverra, lectus eget luctus feugiat, nunc risus dictum enim, in ultricies mauris mi id nibh. Cras ut eleifend tortor. Donec ut turpis sed velit interdum tempor. Integer ac tellus id nisl dictum tincidunt. Pellentesque a metus justo. In sagittis, metus sed pharetra accumsan, odio neque luctus orci, vitae cursus neque nulla et justo.</p>
+                    <p>Aliquam nec sapien quis dolor iaculis porttitor. Proin at mattis magna. Sed vitae dapibus risus. Donec vehicula velit at lacinia posuere. Vestibulum imperdiet pellentesque lacus sed pretium. Vivamus ut efficitur tortor. Vestibulum aliquam libero non tincidunt efficitur. Quisque semper, urna eget blandit posuere, diam magna dapibus ex, a porta justo mi in sem.</p>
+                    <p>Morbi aliquet nulla at urna bibendum, vitae imperdiet ipsum iaculis. Aenean dictum quam nec magna condimentum, vitae bibendum felis vulputate. Sed vitae scelerisque dui, vitae fermentum leo. Nam blandit, magna sit amet pharetra porttitor, neque libero finibus erat, a pretium justo ex congue nisl.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+    (function() {
+        var toggle = document.getElementById('toggleSticky');
+        var img = document.getElementById('demoImage');
+        if (toggle && img) {
+            toggle.addEventListener('change', function() {
+                if (toggle.checked) {
+                    img.classList.add('is-sticky');
+                } else {
+                    img.classList.remove('is-sticky');
+                }
+            });
+        }
+    })();
+    </script>
+    <script>
+    // Auto-fix common local image path/extension issues for assets under "scanned/"
+    (function() {
+        function trySources(img, candidates) {
+            var index = 0;
+            function tryNext() {
+                if (index >= candidates.length) { return; }
+                var next = candidates[index++];
+                var test = new Image();
+                test.onload = function() { img.src = next; };
+                test.onerror = tryNext;
+                test.src = next;
+            }
+            tryNext();
+        }
+
+        var pathVariants = function(path) {
+            // given 'scanned/img1.JPG' -> generate path variants for local files
+            var parts = path.split('/');
+            var file = parts.pop();
+            var dir = parts.join('/');
+            var dot = file.lastIndexOf('.');
+            var base = dot > -1 ? file.slice(0, dot) : file;
+            var exts = ['JPG','jpg','jpeg','png','webp','gif'];
+            var dirs = [dir, './' + dir, '../' + dir, '.'];
+            var out = [];
+            for (var i = 0; i < dirs.length; i++) {
+                for (var j = 0; j < exts.length; j++) {
+                    out.push((dirs[i] === '.' ? '' : dirs[i] + '/') + base + '.' + exts[j]);
+                }
+            }
+            return out;
+        };
+
+        var images = document.querySelectorAll('img[src^="scanned/"], img[src^="./scanned/"]');
+        for (var k = 0; k < images.length; k++) {
+            (function(img) {
+                var original = img.getAttribute('src');
+                img.addEventListener('error', function onErr() {
+                    img.removeEventListener('error', onErr);
+                    img.style.outline = '2px dashed #ef4444';
+                    img.style.outlineOffset = '4px';
+                    trySources(img, pathVariants(original));
+                });
+            })(images[k]);
+        }
+    })();
+    </script>
+</body>
+</html>
